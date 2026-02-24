@@ -1,0 +1,151 @@
+@use '../../../shared/styles/_variables.scss' as *;
+
+.list {
+  background: $color-list-bg;
+  width: 280px;
+  border-radius: $radius-md;
+  padding: $spacing-sm;
+  display: flex;
+  flex-direction: column;
+  max-height: 85vh;
+}
+
+.list-header {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-sm;
+}
+
+.list-title {
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.list-actions {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+}
+
+.list-cards {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+.list-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.list-menu {
+  position: relative;
+}
+
+.list-menu-trigger {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.08);
+  }
+}
+
+.list-menu-popover {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 180px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  padding: 8px;
+  z-index: 50;
+  animation: fadeIn 0.15s ease;
+}
+
+.menu-item {
+  width: 100%;
+  padding: 8px;
+  background: transparent;
+  border: none;
+  text-align: left;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  &.danger {
+    color: #d32f2f;
+  }
+}
+
+.confirm-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.confirm-text {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.confirm-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.confirm-btn {
+  flex: 1;
+  background: #016617;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px;
+  cursor: pointer;
+
+  &:hover {
+    background: #015a14;
+  }
+}
+
+.cancel-btn {
+  flex: 1;
+  background: #f1f1f1;
+  border: none;
+  border-radius: 6px;
+  padding: 6px;
+  cursor: pointer;
+
+  &:hover {
+    background: #e0e0e0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

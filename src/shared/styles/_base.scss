@@ -1,0 +1,54 @@
+@use './variables' as *;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: $color-bg;
+  color: $text-dark;
+}
+.inline-create-trigger {
+  width: 100%;
+  padding: 8px;
+  border: none;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: background 0.2s ease;
+  background: rgba(0, 0, 0, 0.116);
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.205);
+  }
+}
+
+.inline-create {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  input {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+
+    &:focus {
+      border-color: #1976d2;
+      outline: none;
+    }
+  }
+
+  &-actions {
+    display: flex;
+    gap: 8px;
+  }
+}

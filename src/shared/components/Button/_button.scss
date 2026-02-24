@@ -1,0 +1,38 @@
+.btn {
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+
+  &-sm { padding: 4px 8px; font-size: 12px; }
+  &-md { padding: 8px 12px; font-size: 14px; }
+  &-lg { padding: 12px 16px; font-size: 16px; }
+
+  &-primary {
+    background-color: #0053bf;
+    color: #fff;
+    &:hover { background-color: #026aa7; }
+  }
+
+  &-secondary {
+    background-color: #e2e4e6;
+    color: #464e5c;
+    &:hover { background-color: #8383837c; }
+  }
+
+  &-danger {
+    background-color: #e9d1ce;
+    color: #db0b0b;
+    &:hover { background-color: #d6b2ad; }
+  }
+
+  &-inline {
+    background: none;
+    color: #1c1f20;
+    padding: 10px 12px;
+    margin-top:6px;
+    background-color: #00000018;
+    &:hover { text-decoration: underline; }
+  }
+}

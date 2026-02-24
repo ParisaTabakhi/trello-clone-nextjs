@@ -1,0 +1,30 @@
+@use '../../../shared/styles/_variables.scss' as *;
+@use '../../../shared/styles/_mixins.scss' as *;;
+
+.board {
+  padding: $spacing-lg;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.board-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: $spacing-md;
+}
+
+.board-empty {
+  padding: $spacing-lg;
+  font-size: 18px;
+}
+
+.board-lists {
+  display: flex;
+  gap: $spacing-md;
+  overflow-x: auto;
+  align-items: flex-start;
+
+  @include scrollbar;
+}
+

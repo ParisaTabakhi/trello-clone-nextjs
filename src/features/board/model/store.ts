@@ -1,16 +1,23 @@
-import {create} from 'zustand';
+'use client';
+
+import { create } from 'zustand';
 import { BoardState } from '../types';
 import { BoardService } from './board.service';
 import { LocalStorageBoardRepository } from '../services/localStorage.repository';
+import { createDemoBoardState } from './demoBord';
 
 const repository = new LocalStorageBoardRepository();
 
-const initialState: BoardState = repository.getBoardState() || {
-  activeBoardId: null,
-  boards: {},
-  lists: {},
-  cards: {},
-  comments: {},
+/**
+ * Safe initialization (SSR compatible)
+ */
+const initializeState = (): BoardState => {
+  if (typeof window === 'undefined') {
+    return createDemoBoardState();
+  }
+
+  const persisted = repository.getBoardState();
+  return persisted ?? createDemoBoardState();
 };
 
 interface BoardStore extends BoardState {
@@ -18,15 +25,21 @@ interface BoardStore extends BoardState {
   setState: (newState: BoardState) => void;
 }
 
-export const useBoardStore = create<BoardStore>((set, get) => {
-  const service = new BoardService(initialState);
+export const useBoardStore = create<BoardStore>((set) => {
+  const initialState = initializeState();
 
   return {
     ...initialState,
-    service,
+
+    service: new BoardService(initialState),
+
     setState: (newState: BoardState) => {
-      set({ ...newState, service: new BoardService(newState) });
       repository.saveBoardState(newState);
+
+      set({
+        ...newState,
+        service: new BoardService(newState),
+      });
     },
   };
 });

@@ -1,0 +1,27 @@
+@use '../../styles//variables' as vars;
+
+.input-field-container {
+  display: flex;
+  flex-direction: column;
+  gap: vars.$spacing-xs;
+  width: 100%;
+}
+
+.input-field {
+  width: 100%;
+  padding: vars.$spacing-xs;
+  border-radius: vars.$radius-sm;
+  border: 1px solid vars.$gray-medium;
+  font-size: 14px;
+
+  &:focus {
+    outline: none;
+    border-color: vars.$color-primary;
+  }
+}
+
+.input-field-actions {
+  display: flex;
+  gap: vars.$spacing-xs;
+  margin-top: vars.$spacing-xs;
+}

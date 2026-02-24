@@ -1,0 +1,104 @@
+@use '../../styles/variables' as vars;
+@use '../../styles/_mixins.scss' as *;
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: vars.$color-white;
+  border-radius: vars.$radius-lg;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: vars.$spacing-md;
+  display: flex;
+  flex-direction: column;
+  gap: vars.$spacing-sm;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: vars.$spacing-sm;
+
+  h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: vars.$spacing-sm;
+
+  .comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: vars.$spacing-xs;
+
+    .comment-item {
+      padding: vars.$spacing-xs;
+      background-color: vars.$gray-light;
+      border-radius: vars.$radius-sm;
+      font-size: 14px;
+    }
+  }
+
+  .add-comment {
+    display: flex;
+    gap: vars.$spacing-xs;
+    margin-top: vars.$spacing-sm;
+
+    input {
+      flex: 1;
+      padding: vars.$spacing-xs;
+      border-radius: vars.$radius-sm;
+      border: 1px solid vars.$gray-medium;
+      font-size: 14px;
+
+      &:focus {
+        outline: none;
+        border-color: vars.$color-primary;
+      }
+    }
+
+    button {
+      flex-shrink: 0;
+    }
+  }
+}
+
+// Animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

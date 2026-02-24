@@ -1,0 +1,68 @@
+@use '../../../shared/styles/_variables.scss' as *;
+@use '../../../shared/styles/_mixins.scss' as *;
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  @include flex-center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  width: 400px;
+  max-width: 90%;
+  border-radius: $radius-md;
+  padding: $spacing-lg;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.comments-list {
+  max-height: 200px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.comment-item {
+  background: $color-list-bg;
+  padding: $spacing-sm;
+  border-radius: $radius-sm;
+  font-size: 13px;
+}
+
+.add-comment {
+  display: flex;
+  gap: $spacing-sm;
+
+  input {
+    flex: 1;
+    padding: $spacing-sm;
+    border-radius: $radius-sm;
+    border: 1px solid $color-border;
+  }
+
+}

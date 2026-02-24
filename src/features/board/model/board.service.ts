@@ -1,3 +1,4 @@
+// src/features/board/model/board.service.ts
 import { Board, List, Card, Comment, BoardState, ID } from '../types';
 import { reorderArray, moveItemBetweenArrays } from '../lib/reorder.util';
 
@@ -36,11 +37,22 @@ export class BoardService {
     };
   }
 
+  updateListTitle(listId: ID, title: string): BoardState {
+    const list = this.state.lists[listId];
+    if (!list) throw new Error(`List ${listId} not found`);
+    return {
+      ...this.state,
+      lists: {
+        ...this.state.lists,
+        [listId]: { ...list, title },
+      },
+    };
+  }
+
   deleteList(listId: ID): BoardState {
     const list = this.state.lists[listId];
     if (!list) return this.state;
 
-    // Remove all cards in list
     const updatedCards = { ...this.state.cards };
     list.cardIds.forEach((cardId) => delete updatedCards[cardId]);
 
@@ -104,12 +116,32 @@ export class BoardService {
     };
   }
 
-  moveCard(
-    cardId: ID,
-    sourceListId: ID,
-    destListId: ID,
-    destIndex: number
-  ): BoardState {
+  deleteCard(cardId: ID): BoardState {
+    const card = this.state.cards[cardId];
+    if (!card) throw new Error(`Card ${cardId} not found`);
+
+    const list = this.state.lists[card.listId];
+    if (!list) throw new Error(`List ${card.listId} not found`);
+
+    const updatedCards = { ...this.state.cards };
+    delete updatedCards[cardId];
+
+    // Remove card from list
+    const updatedList = { ...list, cardIds: list.cardIds.filter(id => id !== cardId) };
+
+    // Remove card comments
+    const updatedComments = { ...this.state.comments };
+    card.commentIds.forEach(id => delete updatedComments[id]);
+
+    return {
+      ...this.state,
+      cards: updatedCards,
+      comments: updatedComments,
+      lists: { ...this.state.lists, [list.id]: updatedList },
+    };
+  }
+
+  moveCard(cardId: ID, sourceListId: ID, destListId: ID, destIndex: number): BoardState {
     const sourceList = this.state.lists[sourceListId];
     const destList = this.state.lists[destListId];
     if (!sourceList || !destList) throw new Error(`List not found`);

@@ -2,7 +2,7 @@ import { BoardState } from '../types';
 
 /**
  * BoardRepository
- * Interface abstraction برای persistence
+ * Interface abstraction for persistence
  */
 export interface BoardRepository {
   getBoardState(): BoardState | null;
