@@ -1,155 +1,177 @@
 'use client';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useBoardStore } from '../model/store';
-import { BoardState, ID, Card, List, Comment } from '../types';
+import { createList, createCard, createComment ,BoardState , ID } from '../types';
 
-/**
- * useBoard
- * Composed hook for UI components to interact with Board feature
- */
 export const useBoard = () => {
-  const { activeBoardId, boards, lists, cards, comments, service, setState } = useBoardStore();
-  const activeBoard = activeBoardId ? boards[activeBoardId] : null;
+  const store = useBoardStore();
+  
+  const activeBoard = useMemo(
+    () => (store.activeBoardId ? store.boards[store.activeBoardId] : null),
+    [store.activeBoardId, store.boards]
+  );
 
-  /** Generic state updater */
+  /**
+   * Generic state updater
+   */
   const updateState = useCallback(
     (updater: (prev: BoardState) => BoardState) => {
-      setState(updater({ activeBoardId, boards, lists, cards, comments }));
+      store.setState(updater({
+        activeBoardId: store.activeBoardId,
+        boards: store.boards,
+        lists: store.lists,
+        cards: store.cards,
+        comments: store.comments
+      }));
     },
-    [activeBoardId, boards, lists, cards, comments, setState]
+    [store]
   );
 
-  /** Board actions */
+  // ===================== Board Actions =====================
   const editBoardTitle = useCallback(
     (title: string) => {
-      if (!activeBoardId) return;
-      updateState(prev => service.updateBoardTitle(activeBoardId, title));
+      if (!store.activeBoardId) return;
+      updateState(prev => store.service.updateBoardTitle(store.activeBoardId!, title));
     },
-    [service, activeBoardId, updateState]
+    [store.activeBoardId, store.service, updateState]
   );
 
-  /** List actions */
+  // ===================== List Actions =====================
   const addList = useCallback(
     (title: string) => {
-      if (!activeBoardId) return;
-      const newList: List = {
-        id: crypto.randomUUID(),
-        boardId: activeBoardId,
-        title,
-        cardIds: [],
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      };
-      updateState(prev => service.createList(activeBoardId, newList));
+      if (!store.activeBoardId) return;
+      const newList = createList(store.activeBoardId, title);
+      updateState(prev => store.service.createList(store.activeBoardId!, newList));
     },
-    [service, activeBoardId, updateState]
+    [store.activeBoardId, store.service, updateState]
   );
 
   const editListTitle = useCallback(
     (listId: ID, title: string) => {
       updateState(prev => {
-        const list = prev.lists[listId];
-        if (!list) return prev;
-        return service.updateListTitle(listId, title); // متد در BoardService اضافه می‌کنیم
+        if (!prev.lists[listId]) return prev;
+        return store.service.updateListTitle(listId, title);
       });
     },
-    [service, updateState]
+    [store.service, updateState]
   );
 
   const deleteList = useCallback(
-    (listId: ID) => updateState(prev => service.deleteList(listId)),
-    [service, updateState]
+    (listId: ID) => updateState(prev => store.service.deleteList(listId)),
+    [store.service, updateState]
   );
 
   const reorderLists = useCallback(
     (startIndex: number, endIndex: number) => {
-      if (!activeBoardId) return;
-      updateState(prev => service.reorderLists(activeBoardId, startIndex, endIndex));
+      if (!store.activeBoardId) return;
+      updateState(prev => store.service.reorderLists(store.activeBoardId!, startIndex, endIndex));
     },
-    [service, activeBoardId, updateState]
+    [store.activeBoardId, store.service, updateState]
   );
 
   const deleteAllCards = useCallback(
-    (listId: ID) => updateState(prev => service.deleteAllCards(listId)),
-    [service, updateState]
+    (listId: ID) => updateState(prev => store.service.deleteAllCards(listId)),
+    [store.service, updateState]
   );
 
-  /** Card actions */
+  // ===================== Card Actions =====================
   const addCard = useCallback(
     (listId: ID, title: string) => {
-      const newCard: Card = {
-        id: crypto.randomUUID(),
-        listId,
-        title,
-        commentIds: [],
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      };
-      updateState(prev => service.createCard(listId, newCard));
+      const newCard = createCard(listId, title);
+      updateState(prev => store.service.createCard(listId, newCard));
     },
-    [service, updateState]
+    [store.service, updateState]
   );
 
   const editCardTitle = useCallback(
-    (cardId: ID, title: string) => updateState(prev => service.updateCardTitle(cardId, title)),
-    [service, updateState]
+    (cardId: ID, title: string) => 
+      updateState(prev => store.service.updateCardTitle(cardId, title)),
+    [store.service, updateState]
   );
 
   const deleteCard = useCallback(
-    (cardId: ID) => updateState(prev => service.deleteCard(cardId)), // متد deleteCard در BoardService اضافه می‌کنیم
-    [service, updateState]
+    (cardId: ID) => updateState(prev => store.service.deleteCard(cardId)),
+    [store.service, updateState]
   );
 
   const moveCard = useCallback(
     (cardId: ID, sourceListId: ID, destListId: ID, destIndex: number) =>
-      updateState(prev => service.moveCard(cardId, sourceListId, destListId, destIndex)),
-    [service, updateState]
+      updateState(prev => store.service.moveCard(cardId, sourceListId, destListId, destIndex)),
+    [store.service, updateState]
   );
 
   const reorderCards = useCallback(
     (listId: ID, startIndex: number, endIndex: number) =>
-      updateState(prev => service.reorderCards(listId, startIndex, endIndex)),
-    [service, updateState]
+      updateState(prev => store.service.reorderCards(listId, startIndex, endIndex)),
+    [store.service, updateState]
   );
 
-  /** Comment actions */
+  // ===================== Comment Actions =====================
   const addComment = useCallback(
     (cardId: ID, content: string) => {
-      const newComment: Comment = {
-        id: crypto.randomUUID(),
-        cardId,
-        content,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      };
-      updateState(prev => service.addComment(cardId, newComment));
+      const newComment = createComment(cardId, content);
+      updateState(prev => store.service.addComment(cardId, newComment));
     },
-    [service, updateState]
+    [store.service, updateState]
   );
 
   const deleteComment = useCallback(
-    (commentId: ID) => updateState(prev => service.deleteComment(commentId)),
-    [service, updateState]
+    (commentId: ID) => updateState(prev => store.service.deleteComment(commentId)),
+    [store.service, updateState]
   );
 
-  return {
-    activeBoard,
-    boards,
-    lists,
-    cards,
-    comments,
-    editBoardTitle,
-    addList,
-    editListTitle,
-    deleteList,
-    reorderLists,
-    addCard,
-    editCardTitle,
-    deleteCard,
-    moveCard,
-    reorderCards,
-    deleteAllCards,
-    addComment,
-    deleteComment,
-  };
+  return useMemo(
+    () => ({
+      // State
+      activeBoard,
+      boards: store.boards,
+      lists: store.lists,
+      cards: store.cards,
+      comments: store.comments,
+      
+      // Board Actions
+      editBoardTitle,
+      
+      // List Actions
+      addList,
+      editListTitle,
+      deleteList,
+      reorderLists,
+      deleteAllCards,
+      
+      // Card Actions
+      addCard,
+      editCardTitle,
+      deleteCard,
+      moveCard,
+      reorderCards,
+      
+      // Comment Actions
+      addComment,
+      deleteComment,
+    }),
+    [
+      // State dependencies
+      activeBoard,
+      store.boards,
+      store.lists,
+      store.cards,
+      store.comments,
+      
+      // Action dependencies
+      editBoardTitle,
+      addList,
+      editListTitle,
+      deleteList,
+      reorderLists,
+      deleteAllCards,
+      addCard,
+      editCardTitle,
+      deleteCard,
+      moveCard,
+      reorderCards,
+      addComment,
+      deleteComment,
+    ]
+  );
 };

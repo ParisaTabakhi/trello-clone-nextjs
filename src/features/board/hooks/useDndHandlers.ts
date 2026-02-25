@@ -5,11 +5,6 @@ import { DragEndEvent, DragOverEvent, DragStartEvent } from '@dnd-kit/core';
 import { useBoard } from './useBoard';
 import { DragItemData } from '../lib/dnd-types';
 
-/**
- * Custom hook for handling all DnD events
- * Single Responsibility: Manage drag and drop logic
- * Dependency Inversion: Depends on abstractions (useBoard hook)
- */
 export const useDndHandlers = () => {
   const { moveCard, reorderCards, reorderLists, lists } = useBoard();
   
