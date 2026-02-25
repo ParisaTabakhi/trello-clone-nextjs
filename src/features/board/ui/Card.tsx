@@ -1,4 +1,5 @@
-"use client"
+"use client";
+
 import React from 'react';
 import { Card as CardType } from '../types';
 import { useBoard } from '../hooks/useBoard';
@@ -10,14 +11,14 @@ interface CardProps {
 }
 
 export const Card: React.FC<CardProps> = ({ card }) => {
-  const { comments, addComment} = useBoard();
+  const { comments, addComment } = useBoard();
   const cardComments = card.commentIds.map((id) => comments[id]);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
   return (
     <>
-      <div className="card" draggable>
-        <div className="card-header" >
+      <div className="card">
+        <div className="card-header">
           <span className="card-title">{card.title}</span>
         </div>
         <div className="card-badge" onClick={() => setIsModalOpen(true)}>

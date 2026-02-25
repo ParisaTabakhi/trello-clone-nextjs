@@ -32,8 +32,17 @@ export const Input: React.FC<InputProps> = ({
   ...props
 }) => {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") onSubmit();
-    if (e.key === "Escape" && onCancel) onCancel();
+    // ⭐⭐ مهم: جلوگیری از انتشار رویداد به والدین
+    e.stopPropagation();
+    
+    if (e.key === "Enter") {
+      e.preventDefault(); // جلوگیری از رفتار پیش‌فرض مرورگر
+      onSubmit();
+    }
+    if (e.key === "Escape" && onCancel) {
+      e.preventDefault();
+      onCancel();
+    }
   };
 
   return (
