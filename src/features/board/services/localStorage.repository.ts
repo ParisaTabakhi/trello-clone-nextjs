@@ -1,4 +1,3 @@
-// src/features/board/services/localStorage.repository.ts
 import { BoardRepository } from './board.repository';
 import { BoardState } from '../types';
 

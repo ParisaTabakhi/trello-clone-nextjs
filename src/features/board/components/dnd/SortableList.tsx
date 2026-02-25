@@ -11,11 +11,6 @@ interface SortableListProps {
   index: number;
 }
 
-/**
- * SortableList Component
- * Single Responsibility: Wraps a list with DnD sortable functionality
- * Open/Closed: Open for extension via props, closed for modification
- */
 export const SortableList: React.FC<SortableListProps> = ({ list, index }) => {
   const {
     attributes,

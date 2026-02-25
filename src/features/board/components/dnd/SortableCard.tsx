@@ -12,11 +12,7 @@ interface SortableCardProps {
   listId: string;
 }
 
-/**
- * SortableCard Component
- * Single Responsibility: Wraps a card with DnD sortable functionality
- * Interface Segregation: Only receives props it needs
- */
+
 export const SortableCard: React.FC<SortableCardProps> = ({ 
   card, 
   index, 

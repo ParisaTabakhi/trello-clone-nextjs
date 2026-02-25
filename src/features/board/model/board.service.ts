@@ -1,5 +1,5 @@
 // src/features/board/model/board.service.ts
-import { Board, List, Card, Comment, BoardState, ID } from '../types';
+import { List, Card, Comment, BoardState, ID } from '../types';
 import { reorderArray, moveItemBetweenArrays } from '../lib/reorder.util';
 
 /**

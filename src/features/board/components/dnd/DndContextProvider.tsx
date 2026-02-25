@@ -14,12 +14,7 @@ interface DndContextProviderProps {
   listsCount: number;
 }
 
-/**
- * DndContextProvider Component
- * Single Responsibility: Provides DnD context to children
- * Dependency Inversion: Depends on hooks abstractions
- * Liskov Substitution: Can be replaced with any DnD provider
- */
+
 export const DndContextProvider: React.FC<DndContextProviderProps> = ({ 
   children, 
   listsCount 

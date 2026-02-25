@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { Button } from "../../../shared/components/Button/Button";
+import { Button } from "@/shared/components/Button/Button";
 import "../styles/_list.scss";
 
 interface ListActionsMenuProps {

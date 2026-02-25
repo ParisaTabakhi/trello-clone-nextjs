@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Card, Comment } from "../types";
-import { Button } from "../../../shared/components/Button/Button";
-import { Modal } from "../../../shared/components/Modal/Modal";
-import { Input } from "../../../shared/components/Input/Input";
+import { Modal } from "@/shared/components/Modal/Modal";
+import { Input } from "@/shared/components/Input/Input";
 import "../styles/_modal.scss";
 
 interface CardModalProps {

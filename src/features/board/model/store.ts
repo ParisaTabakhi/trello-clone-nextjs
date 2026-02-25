@@ -1,3 +1,4 @@
+// src/features/board/model/store.ts
 'use client';
 
 import { create } from 'zustand';
@@ -8,33 +9,28 @@ import { createDemoBoardState } from './demoBord';
 
 const repository = new LocalStorageBoardRepository();
 
-/**
- * Safe initialization (SSR compatible)
- */
-const initializeState = (): BoardState => {
-  if (typeof window === 'undefined') {
-    return createDemoBoardState();
-  }
-
-  const persisted = repository.getBoardState();
-  return persisted ?? createDemoBoardState();
-};
-
 interface BoardStore extends BoardState {
   service: BoardService;
   setState: (newState: BoardState) => void;
 }
 
 export const useBoardStore = create<BoardStore>((set) => {
-  const initialState = initializeState();
+  const initialState: BoardState = {
+    boards: {},
+    lists: {},
+    cards: {},
+    comments: {},
+    activeBoardId: null,
+  };
 
   return {
     ...initialState,
-
     service: new BoardService(initialState),
 
     setState: (newState: BoardState) => {
-      repository.saveBoardState(newState);
+      if (typeof window !== 'undefined') {
+        repository.saveBoardState(newState);
+      }
 
       set({
         ...newState,
@@ -43,3 +39,11 @@ export const useBoardStore = create<BoardStore>((set) => {
     },
   };
 });
+
+if (typeof window !== 'undefined') {
+  setTimeout(() => {
+    const persisted = repository.getBoardState();
+    const demoState = createDemoBoardState();
+    useBoardStore.getState().setState(persisted ?? demoState);
+  }, 0);
+}

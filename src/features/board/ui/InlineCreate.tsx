@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Input } from "../../../shared/components/Input/Input";
-import { Button } from "../../../shared/components/Button/Button";
+import { Input } from "@/shared/components/Input/Input";
+import { Button } from "@/shared/components/Button/Button";
 import "../styles/_list.scss";
 
 interface InlineCreateProps {
