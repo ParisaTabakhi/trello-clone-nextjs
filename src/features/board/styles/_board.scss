@@ -1,18 +1,23 @@
 @use '../../../shared/styles/_variables.scss' as *;
 @use '../../../shared/styles/_mixins.scss' as *;
 
-
 .board {
   padding: $spacing-lg;
   height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow: hidden; 
+  width: 100%;
+  max-width: 100vw;
+  position: relative;
 }
 
 .board-title {
   font-size: 22px;
   font-weight: 600;
   margin-bottom: $spacing-md;
+  flex-shrink: 0;
+  padding: 0 $spacing-sm;
 }
 
 .board-empty {
@@ -24,8 +29,41 @@
   display: flex;
   gap: $spacing-md;
   overflow-x: auto;
+  overflow-y: hidden;
   align-items: flex-start;
-
-  @include scrollbar;
+  flex: 1;
+  min-height: 0;
+  padding: $spacing-xs $spacing-sm;
+  
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    
+    &:hover {
+      background: rgba(0, 0, 0, 0.3);
+    }
+  }
+  
+  @media (max-width: $breakpoint-mobile) {
+    gap: $spacing-sm;
+    padding-bottom: $spacing-sm;
+  }
 }
 
+.add-list-container {
+  flex-shrink: 0;
+  width: 280px;
+  
+  @media (max-width: $breakpoint-mobile) {
+    width: 260px;
+  }
+}
