@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Trello Clone
 
-## Getting Started
+A lightweight Trello clone built with Next.js, TypeScript, and Zustand. All data is persisted in localStorage.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+##  Features
+
+- **Board Management** – Edit board title
+- **List Management** – Create, delete, edit, and reorder lists via drag & drop
+- **Card Management** – Create, delete, edit, and move cards between lists
+- **Comments** – Add and view comments in a modal
+- **Drag & Drop** – Horizontal list reorder + vertical/cross-list card reorder
+- **Persistence** – All data saved in localStorage
+- **Responsive** – Works on desktop and mobile
+
+---
+
+##  Tech Stack
+
+- **Framework:** Next.js 14 (App Router)
+- **Language:** TypeScript
+- **Styling:** SCSS Modules
+- **State Management:** Zustand
+- **Drag & Drop:** @dnd-kit
+- **Storage:** localStorage
+
+---
+
+## 🏗 Project Structure
+
+```
+src/
+├── app/                    # Next.js pages
+├── features/               # Feature-based modules
+│   └── board/              # Board feature
+│       ├── ui/             # Presentational components
+│       ├── components/      # Specialized components (DnD)
+│       ├── hooks/           # Custom hooks
+│       ├── model/           # Business logic & state
+│       ├── services/        # Persistence layer
+│       ├── lib/             # Utility functions
+│       └── types.ts         # TypeScript types
+├── shared/                 # Shared code across features
+│   ├── ui/                  # Reusable UI components
+│   └── styles/              # Global SCSS
+└── types/                   # Global type definitions
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+##  Getting Started
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# Clone repository
+git clone https://github.com/yourusername/trello-clone.git
 
-## Learn More
+# Install dependencies
+cd trello-clone
+npm install
 
-To learn more about Next.js, take a look at the following resources:
+# Run development server
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Open [http://localhost:3000](http://localhost:3000) to view the project.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+##  Responsive Design
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Desktop:** Horizontal scroll for lists, vertical scroll for cards
+- **Mobile:** Optimized widths with smooth scrolling
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+
+MIT
