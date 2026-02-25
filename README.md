@@ -6,7 +6,6 @@ A lightweight Trello clone built with Next.js, TypeScript, and Zustand. All data
 
 ##  Features
 
-- **Board Management** – Edit board title
 - **List Management** – Create, delete, edit, and reorder lists via drag & drop
 - **Card Management** – Create, delete, edit, and move cards between lists
 - **Comments** – Add and view comments in a modal
@@ -53,7 +52,7 @@ src/
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/trello-clone.git
+git clone https://github.com/ParisaTabakhi/trello-clone.git
 
 # Install dependencies
 cd trello-clone
